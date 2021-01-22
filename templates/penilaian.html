@@ -1,0 +1,52 @@
+{% extends "snippets/base.html" %}
+{% block  content %}
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col">
+            <h1>Penilaian Karyawan</h1>
+        </div>
+        <div class="col  text-right">
+        </div>
+    </div>
+    <hr>
+    <table class="table table-bordered" id="myTable">
+        <thead>
+        <tr>
+            <th>Nama Karyawan</th>
+            {% for x in a  %}
+            <th scope="col" style="background-color:DarkGoldenRod">{{x.kode_kriteria}}</th>
+            {% endfor  %}
+            <th scope="col" style="background-color:CornflowerBlue">Skor</th>
+            <th scope="col" >Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for x in b  %}
+        	<tr>
+                <td>{{x.nama}}</td>
+                {% for c in x.karyawan.all  %}
+                <td>{{c.nilai}}</td>
+                {% endfor  %}
+                <td><b>{{x.skor|floatformat:"0"}}</b></td>
+                <td><a href="{% url 'rincian-nilai' id=x.id %}" class="btn btn-info">RINCIAN</a></td>
+            </tr>
+        {% endfor  %}
+            </tbody>
+    </table>
+</div>
+
+
+{% endblock content %}
+{% block  script %}
+	<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable({
+            "order":[5,'dsc']
+        });
+    } );
+
+</script>
+{% endblock script %}

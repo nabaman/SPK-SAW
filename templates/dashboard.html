@@ -1,0 +1,115 @@
+{% extends "snippets/base.html" %}
+{% block  content %}
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col">
+            <h1>Data Karyawan</h1>
+        </div>
+        <div class="col  text-right">
+            <a href="{% url 'tambah-data-karyawan' %}" class="btn btn-success">Tambah Karyawan</a>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-bordered" id="myTable">
+        <thead>
+        <tr>
+            <th scope="col">NO</th>
+            <th scope="col">Nama</th>
+            <th scope="col">No Induk</th>
+            <th scope="col">Tanggal Lahir</th>
+            <th scope="col">Alamat</th>
+            <th scope="col">Pendidikan</th>
+            <th scope="col">Jabatan</th>
+            <th scope="col">No Handphone</th>
+            <th scope="col">Action</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for x in a %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{x.nama}}</td>
+            <td>{{x.no_induk}}</td>
+            <td>{{x.tanggal_lahir}}</td>
+            <td>{{x.alamat}}</td>
+            <td>{{x.pendidikan}}</td>
+            <td>{{x.jabatan}}</td>
+            <td>{{x.no_telp}}</td>
+            <td><a href="{% url 'edit-data-karyawan' id=x.id %}" class="btn btn-primary">Edit</a> |
+                <a href="{% url 'hapus-data-karyawan' id=x.id %}" class="btn btn-danger">Hapus</a>
+
+                {% if x.karyawan.all.exists == False%}
+                | <a href="" class="btn btn-dark" data-toggle="modal" data-target="#{{x.id}}">Nilai</a>
+                {% endif %}
+
+            </td>
+        </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="{{x.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Nilai</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <input type="text" hidden name="karyawan_id" value="{{x.id}}">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 col-form-label">NAMA KARYAWAN</label>
+                                            <div class="col-sm-8">
+                                                <input name="karyawan_id" value="{{x.nama}}" type="text" class="form-control" id="inputEmail3"
+                                                       placeholder="Kode Kriteria . . . " maxlength="2" style="text-transform:uppercase" disabled>
+                                            </div>
+                                        </div>
+
+                                        {% for x in kriteria  %}
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 col-form-label">{{x.nama_kriteria}}</label>
+                                            <div class="col-sm-8">
+                                                <select required name="{{x}}" class="form-control" id="exampleFormControlSelect1">
+                                                    <option value=""></option>
+                                                    {% for b in x.data_krips_set.all  %}
+                                                    <option value="{{b.nilai}}">{{b.nama_krips}}</option>
+                                                    {% endfor  %}
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        {% endfor  %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah Nilai</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+{% endblock content %}

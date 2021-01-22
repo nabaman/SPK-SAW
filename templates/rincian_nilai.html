@@ -1,0 +1,92 @@
+{% extends "snippets/base.html" %}
+{% block  content %}
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col">
+            <h1>Penilaian Karyawan</h1>
+            <h5>BOBOT KRITERIA</h5>
+            {% for x in a  %}
+            	{{x.nama_kriteria}} : {{x.bobot}}<br>
+            {% endfor  %}
+        </div>
+        <div class="col  text-right">
+        </div>
+    </div>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nama Karyawan</th>
+            {% for x in c %}
+            <th scope="col" style="background-color:DarkGoldenRod">{{x.kriteria.kode_kriteria}}/{{x.nilai_max|floatformat:"0"}}</th>
+            {% endfor %}
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>{{karyawan.nama}}</td>
+            {% for z in c %}
+            <td>{{z.nilai}}</td>
+            {% endfor %}
+        </tr>
+
+
+        </tbody>
+    </table>
+    <br>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nama Karyawan</th>
+            {% for x in c %}
+            <th scope="col" style="background-color:DarkGoldenRod">{{x.kriteria.kode_kriteria}}/{{x.nilai_max|floatformat:"0"}}</th>
+            {% endfor %}
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>{{karyawan.nama}}</td>
+            {% for z in c %}
+            <td>{{z.normalisasi1}}</td>
+            {% endfor %}
+        </tr>
+
+
+        </tbody>
+    </table>
+    <br>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nama Karyawan</th>
+            {% for x in c %}
+            <th scope="col" style="background-color:DarkGoldenRod">{{x.kriteria.kode_kriteria}}/{{x.nilai_max|floatformat:"0"}}</th>
+            {% endfor %}
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>{{karyawan.nama}}</td>
+            {% for z in c %}
+            <td>{{z.normalisasi2}}</td>
+            {% endfor %}
+        </tr>
+
+
+        </tbody>
+    </table>
+    <br>
+    <h1>SKOR : {{karyawan.skor}}</h1>
+    <br><br><br><br><br>
+
+</div>
+
+
+{% endblock content %}
